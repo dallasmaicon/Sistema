@@ -1,0 +1,63 @@
+unit frmCadastroProduto_U;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
+  mControllerConexao_U, Data.DB;
+
+type
+  TfrmCadastroProduto = class(TForm)
+    edCodigo: TEdit;
+    edNome: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    btnSalvar: TBitBtn;
+    DataSource1: TDataSource;
+    procedure btnSalvarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+    FController : iController;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadastroProduto: TfrmCadastroProduto;
+
+implementation
+
+uses
+  mControllerProduto_U;
+
+{$R *.dfm}
+
+procedure TfrmCadastroProduto.btnSalvarClick(Sender: TObject);
+var
+  ACadastroProduto: TControlllerProduto;
+  AProduto: TnClassProduto;
+begin
+  AProduto.Codigo := StrToIntDef(edCodigo.Text, 0);
+  AProduto.Nome := edNome.Text;
+
+  ACadastroProduto := TControlllerProduto.Create(AProduto);
+  try
+      FController
+        .Entidades
+          .Produto
+            .DataSet(DataSource1)
+          .ExecSQL(ACadastroProduto.Param, ACadastroProduto.GetValue);
+  finally
+    FreeAndNil(ACadastroProduto);
+  end;
+end;
+
+procedure TfrmCadastroProduto.FormCreate(Sender: TObject);
+begin
+  FController := TController.New;
+  ReportMemoryLeaksOnShutdown := true;
+end;
+
+end.

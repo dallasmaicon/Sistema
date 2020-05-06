@@ -1,0 +1,97 @@
+unit frmCadastroContaPagar_U;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  mControllerConexao_U, Data.DB, mControllerPagar_U;
+
+type
+  TfrmCadastroContaPagar = class(TForm)
+    Label1: TLabel;
+    EdTitulo: TEdit;
+    Label2: TLabel;
+    Label4: TLabel;
+    edFornecedor: TEdit;
+    Label5: TLabel;
+    mmObservacao: TMemo;
+    btnCadastrar: TBitBtn;
+    edVecnimento: TMaskEdit;
+    DataSource1: TDataSource;
+    DataSource2: TDataSource;
+    Label3: TLabel;
+    edValor: TEdit;
+    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure btnCadastrarClick(Sender: TObject);
+  private
+    { Private declarations }
+    FController: iController;
+
+    procedure LimparCampos;
+    function GetClassPagar: TnClassPagar;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadastroContaPagar: TfrmCadastroContaPagar;
+
+implementation
+
+{$R *.dfm}
+
+{ TfrmCadastroContaPagar }
+
+procedure TfrmCadastroContaPagar.btnCadastrarClick(Sender: TObject);
+var
+  ACadastroPagar: TControlllerPagar;
+begin
+  ACadastroPagar := TControlllerPagar.Create(GetClassPagar);
+  try
+    FController
+      .Entidades
+        .Pagar
+          .DataSet(DataSource1)
+        .ExecSQL(ACadastroPagar.Param, ACadastroPagar.GetValue);
+  finally
+    FreeAndNil(ACadastroPagar);
+    ShowMessage('Cadastro efeutado com sucesso!');
+    LimparCampos;
+  end;
+end;
+
+function TfrmCadastroContaPagar.GetClassPagar: TnClassPagar;
+var
+  AController: iController;
+begin
+  Result.Titulo      := EdTitulo.Text;
+  Result.Fornecedor  := edFornecedor.Text;
+  Result.Venciomento := StrToDateDef(edVecnimento.Text, 0);
+  Result.Observacao  := mmObservacao.Text;
+end;
+
+procedure TfrmCadastroContaPagar.FormCreate(Sender: TObject);
+begin
+  FController := TController.New;
+  ReportMemoryLeaksOnShutdown := true;
+end;
+
+procedure TfrmCadastroContaPagar.FormShow(Sender: TObject);
+begin
+  LimparCampos;
+end;
+
+procedure TfrmCadastroContaPagar.LimparCampos;
+begin
+  EdTitulo.Clear;
+  edFornecedor.Clear;
+  mmObservacao.Clear;
+  mmObservacao.Lines.Clear;
+  edVecnimento.Clear;
+  edValor.Clear;
+  EdTitulo.SetFocus;
+end;
+
+end.

@@ -1,0 +1,66 @@
+unit mControllerCliente_U;
+
+interface
+
+type
+  TnClassCliente = record
+    Codigo: Integer;
+    Nome: String;
+    Endereco: string;
+  end;
+
+  TControlllerCliente = class
+    private
+      FCliente: TnClassCliente;
+      FParam: string;
+
+      procedure GetParam;
+      procedure ValidarDados;
+    public
+      constructor Create(_AProduto: TnClassCliente);
+      function GetValue: string;
+
+      property Param: string read FParam;
+  end;
+
+implementation
+
+uses
+  System.SysUtils;
+
+{ TControlllerCliente }
+
+constructor TControlllerCliente.Create(_AProduto: TnClassCliente);
+begin
+  FCliente := _AProduto;
+  GetParam;;
+end;
+
+procedure TControlllerCliente.ValidarDados;
+begin
+  if FCliente.Codigo < 1 then
+    raise Exception.Create('Erro: Código do produto não informado.');
+
+  if FCliente.Nome = '' then
+    raise Exception.Create('Erro: Nome do produto não informado.');
+end;
+
+procedure TControlllerCliente.GetParam;
+begin
+  FParam := 'CODIGO';
+  if FCliente.Nome <> '' then
+    FParam := FParam + ', NOME';
+end;
+
+function TControlllerCliente.GetValue: string;
+begin
+  ValidarDados;
+
+  Result := '';
+  if FCliente.Codigo > 0 then
+  Result := IntToStr(FCliente.Codigo);
+  if FCliente.Nome <> '' then
+    Result := Result + ', ''' + FCliente.Nome + '''';
+end;
+
+end.

@@ -1,0 +1,52 @@
+unit mModelEntidadesFactory_U;
+
+interface
+
+  type
+      TModelEntidadesFactory = class(TInterfacedObject, iModelEntidadeFactory)
+      private
+        FProduto : iModelEntidade;
+        FCliente : iModelEntidade;
+      public
+        constructor Create;
+        destructor Destroy; override;
+        class function New : iModelEntidadeFactory;
+        function Produto : iModelEntidade;
+        function Cliente : iModelEntidade;
+      end;
+
+implementation
+
+{ TModelEntidadesFactory }
+
+constructor TModelEntidadesFactory.Create;
+begin
+
+end;
+
+destructor TModelEntidadesFactory.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TModelEntidadesFactory.New: iModelEntidadeFactory;
+begin
+  Result := Self.Create;
+end;
+
+function TModelEntidadesFactory.Produto: iModelEntidade;
+begin
+  if not Assigned(FProduto) then
+    FProduto := TModelEntidadeProduto.New;
+  Result := FProduto;
+end;
+
+function TModelEntidadesFactory.Cliente: iModelEntidade;
+begin
+  if not Assigned(FCliente) then
+    FCliente := TModelEntidadeCliente.New;
+  Result := FCliente;
+end;
+
+end.

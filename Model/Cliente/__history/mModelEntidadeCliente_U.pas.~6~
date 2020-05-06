@@ -1,0 +1,60 @@
+unit mModelEntidadeCliente_U;
+
+interface
+
+uses
+  mModelConexao_U, Data.DB;
+
+  type
+    TModelEntidadeCliente = class(TInterfacedObject, iModelEntidade)
+      private
+        FQuery : iModelQuery;
+      public
+        constructor Create;
+        destructor Destroy; override;
+        class function New : iModelEntidade;
+        function DataSet ( aValue : TDataSource ) : iModelEntidade;
+        procedure Open;
+        procedure ExecSQL(AParam, AValue: string);
+    end;
+
+implementation
+
+uses
+  mModelConexaoFactory_U;
+
+{ TModelEntidadeCliente }
+
+constructor TModelEntidadeCliente.Create;
+begin
+  FQuery := TModelConexaoFactory.New.Query;
+end;
+
+function TModelEntidadeCliente.DataSet(aValue: TDataSource): iModelEntidade;
+begin
+  Result := Self;
+  aValue.DataSet := TDataSet(FQuery.Query);
+end;
+
+destructor TModelEntidadeCliente.Destroy;
+begin
+
+  inherited;
+end;
+
+procedure TModelEntidadeCliente.ExecSQL(AParam, AValue: string);
+begin
+  FQuery.ExecSQL('');
+end;
+
+class function TModelEntidadeCliente.New: iModelEntidade;
+begin
+  Result := Self.Create;
+end;
+
+procedure TModelEntidadeCliente.Open;
+begin
+  FQuery.Open('SELECT * FROM CLIENTE');
+end;
+
+end.

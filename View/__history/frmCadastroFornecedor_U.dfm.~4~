@@ -1,0 +1,85 @@
+object frmCadastroFornecedor: TfrmCadastroFornecedor
+  Left = 0
+  Top = 0
+  Caption = 'frmCadastroFornecedor'
+  ClientHeight = 182
+  ClientWidth = 369
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 52
+    Top = 24
+    Width = 33
+    Height = 13
+    Caption = 'C'#243'digo'
+  end
+  object Label2: TLabel
+    Left = 25
+    Top = 51
+    Width = 60
+    Height = 13
+    Caption = 'Raz'#227'o Social'
+  end
+  object Label3: TLabel
+    Left = 46
+    Top = 114
+    Width = 39
+    Height = 13
+    Caption = 'Endre'#231'o'
+  end
+  object Label4: TLabel
+    Left = 14
+    Top = 83
+    Width = 71
+    Height = 13
+    Caption = 'Nome Fantasia'
+  end
+  object edCodigo: TEdit
+    Left = 97
+    Top = 16
+    Width = 121
+    Height = 21
+    TabOrder = 0
+  end
+  object edNome: TEdit
+    Left = 97
+    Top = 43
+    Width = 257
+    Height = 21
+    TabOrder = 1
+  end
+  object btnSalvar: TBitBtn
+    Left = 153
+    Top = 141
+    Width = 75
+    Height = 25
+    Caption = 'Cadastrar'
+    TabOrder = 3
+  end
+  object edEndereco: TEdit
+    Left = 97
+    Top = 106
+    Width = 257
+    Height = 21
+    TabOrder = 4
+  end
+  object Edit1: TEdit
+    Left = 97
+    Top = 75
+    Width = 257
+    Height = 21
+    TabOrder = 2
+  end
+  object DataSource1: TDataSource
+    Left = 321
+    Top = 134
+  end
+end

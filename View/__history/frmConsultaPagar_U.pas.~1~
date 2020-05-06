@@ -1,0 +1,24 @@
+unit frmConsultaPagar_U;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  TfrmConsultaPagar = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmConsultaPagar: TfrmConsultaPagar;
+
+implementation
+
+{$R *.dfm}
+
+end.

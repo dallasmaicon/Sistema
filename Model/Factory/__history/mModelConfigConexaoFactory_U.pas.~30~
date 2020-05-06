@@ -1,0 +1,65 @@
+unit mModelConfigConexaoFactory_U;
+
+interface
+
+  type
+    TnConexao = record
+      Driver: string;
+      Caminho: string;
+      User: string;
+      Password: string;
+    end;
+
+    TModelConfigConexaoFactory = class
+      private
+        FArquivoINI: string;
+      public
+        constructor Create; reintroduce;
+        function GetConexao: TnConexao;
+    end;
+
+implementation
+
+uses
+  System.SysUtils, System.Classes, IniFiles;
+
+{ TModelConfigConexaoFactory }
+
+constructor TModelConfigConexaoFactory.Create;
+var
+  AConteudo: TStringList;
+begin
+  FArquivoINI := ExtractFilePath(ParamStr(0)) + 'config.ini';
+  if not FileExists(FArquivoINI) then
+  begin
+    AConteudo := TStringList.Create;
+    try
+      AConteudo.Add('[FIREBIRD]');
+      AConteudo.Add('Driver=FB');
+      AConteudo.Add('Caminho=localhost/3050:' + ParamStr(0) + '\Banco\BASEMAICON.FDB');
+      AConteudo.Add('User=SYSDBA');
+      AConteudo.Add('Password=masterkey');
+      AConteudo.SaveToFile(FArquivoINI);
+    finally
+      FreeAndNil(AConteudo);
+    end;
+  end;
+end;
+
+function TModelConfigConexaoFactory.GetConexao: TnConexao;
+var
+  Configuracoes : TIniFile;
+begin
+
+  Configuracoes := TIniFile.Create(FArquivoINI);
+  Try
+    Result.Driver := Configuracoes.ReadString('Dados', 'Driver',  Result.Driver);
+    Result.User   := Configuracoes.ReadString('Dados', 'User',   Result.User);
+    Result.Password   := Configuracoes.ReadString('Dados', 'Password',   Result.Password);
+  Finally
+    Configuracoes.Free;
+  end;
+  Result.Caminho := '';
+end;
+
+end.

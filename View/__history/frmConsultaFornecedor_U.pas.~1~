@@ -1,0 +1,24 @@
+unit frmConsultaFornecedor_U;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  TfrmConsultaFornecedor = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmConsultaFornecedor: TfrmConsultaFornecedor;
+
+implementation
+
+{$R *.dfm}
+
+end.

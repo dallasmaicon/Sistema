@@ -1,0 +1,83 @@
+unit mControllerFornecedor_U;
+
+interface
+
+type
+  TnClassFornecedor = record
+    Codigo: Integer;
+    Nome: String;
+    Fantasia: string;
+    Endereco: string;
+  end;
+
+  TControlllerCliente = class
+    private
+      FFornecedor : TnClassFornecedor;
+      FParam: string;
+
+      procedure GetParam;
+      procedure ValidarDados;
+    public
+      constructor Create(_AProduto: TnClassFornecedor);
+      function GetValue: string;
+
+      property Param: string read FParam;
+  end;
+
+implementation
+
+uses
+  System.SysUtils;
+
+{ TControlllerCliente }
+
+constructor TControlllerCliente.Create(_AProduto: TnClassFornecedor);
+begin
+  FCliente := _AProduto;
+  GetParam;;
+end;
+
+procedure TControlllerCliente.ValidarDados;
+begin
+  if FFornecedor.Codigo < 1 then
+    raise Exception.Create('Erro: Código do cliente não informado.');
+
+  if (FFornecedor.Nome = '') or (FFornecedor.Nome.Length > 200) then
+    raise Exception.Create('Erro: Nome do cliente não informado ou qunatidade de caracteres maior que o permitido.');
+
+  if (FFornecedor.Fantasia = '') or (FFornecedor.Fantasia.Length > 200) then
+    raise Exception.Create('Erro: Nome do cliente não informado ou qunatidade de caracteres maior que o permitido.');
+
+    if (FFornecedor.Endereco = '') or (FFornecedor.Endereco.Length > 255) then
+    raise Exception.Create('Erro: Endereço do cliente não informado ou quantidade de caracteres maior que o permitido.');
+end;
+
+procedure TControlllerCliente.GetParam;
+begin
+  FParam := 'CODIGO';
+  if FFornecedor.Nome <> '' then
+    FParam := FParam + ', NOME';
+  if FFornecedor.Fantasia <> '' then
+    FParam := FParam + ', FANTASIA';
+  if FFornecedor.Endereco <> '' then
+    FParam := FParam + ', ENDERECO';
+  FParam := FParam + ', DATACADASTRO';
+end;
+
+function TControlllerCliente.GetValue: string;
+begin
+  ValidarDados;
+
+  Result := '';
+  if FFornecedor.Codigo > 0 then
+  Result := IntToStr(FFornecedor.Codigo);
+  if FFornecedor.Nome <> '' then
+    Result := Result + ', ''' + FFornecedor.Nome + '''';
+  if FFornecedor.Fantasia <> '' then
+    Result := Result + ', ''' + FFornecedor.Fantasia + '''';
+  if FFornecedor.Endereco <> '' then
+    Result := Result + ', ''' + FFornecedor.Endereco + '''';
+  Result := Result + ', ''' + FormatDateTime('mm-dd-yyyy', Now) + '''';
+end;
+
+end.

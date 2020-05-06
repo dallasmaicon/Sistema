@@ -1,0 +1,66 @@
+unit frmCadastroCliente_U;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.Buttons, mControllerConexao_U,
+  mControllerCliente_U;
+
+type
+  TfrmCadastroCliente = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    edCodigo: TEdit;
+    edNome: TEdit;
+    btnSalvar: TBitBtn;
+    DataSource1: TDataSource;
+    Label3: TLabel;
+    edEndereco: TEdit;
+    procedure FormCreate(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+    FController: iController;
+    function GetClassCliente: TnClassCliente;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadastroCliente: TfrmCadastroCliente;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCadastroCliente.btnSalvarClick(Sender: TObject);
+var
+  ACadastroCliente: TControlllerCliente;
+begin
+  ACadastroCliente := TControlllerCliente.Create(GetClassProduto);
+  try
+    FController
+      .Entidades
+        .Produto
+          .DataSet(DataSource1)
+        .ExecSQL(ACadastroCliente.Param, ACadastroCliente.GetValue);
+  finally
+    FreeAndNil(ACadastroCliente);
+  end;
+end;
+
+function TfrmCadastroCliente.GetClassCliente: TnClassCliente;
+begin
+  Result.Codigo := StrToIntDef(edCodigo.Text, 0);
+  Result.Nome   := edNome.Text;
+  Result.Endereco := edEndereco.Text;
+end;
+
+procedure TfrmCadastroCliente.FormCreate(Sender: TObject);
+begin
+  FController := TController.New;
+  ReportMemoryLeaksOnShutdown := true;
+end;
+
+end.

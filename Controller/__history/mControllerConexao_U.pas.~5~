@@ -1,0 +1,26 @@
+unit mControllerConexao_U;
+
+interface
+
+uses
+  mModelConexao_U;
+
+type
+  iController = interface
+    function Entidades : iModelEntidadeFactory;
+  end;
+
+Type
+  TController = class(TInterfacedObject, iController)
+    private
+      FModelEntidades : iModelEntidadeFactory;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      class function New : iController;
+      function Entidades : iModelEntidadeFactory;
+  end;
+
+implementation
+
+end.

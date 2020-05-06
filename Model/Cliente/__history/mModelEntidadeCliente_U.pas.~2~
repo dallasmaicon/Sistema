@@ -1,0 +1,36 @@
+unit mModelEntidadeCliente_U;
+
+interface
+
+implementation
+
+{ TModelEntidadeCliente }
+
+constructor TModelEntidadeCliente.Create;
+begin
+  FQuery := TModelConexaoFactory.New.Query;
+end;
+
+function TModelEntidadeCliente.DataSet(aValue: TDataSource): iModelEntidade;
+begin
+  Result := Self;
+  aValue.DataSet := TDataSet(FQuery.Query);
+end;
+
+destructor TModelEntidadeCliente.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TModelEntidadeCliente.New: iModelEntidade;
+begin
+  Result := Self.Create;
+end;
+
+procedure TModelEntidadeCliente.Open;
+begin
+  FQuery.Open('SELECT * FROM CLIENTE');
+end;
+
+end.

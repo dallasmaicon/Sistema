@@ -1,0 +1,12 @@
+unit mControllerConexao_U;
+
+type
+  iController = interface
+    function Entidades : iModelEntidadeFactory;
+  end;
+
+interface
+
+implementation
+
+end.
