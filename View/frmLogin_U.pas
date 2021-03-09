@@ -29,8 +29,8 @@ var
 implementation
 
 uses
-  frmConsultaProduto_U, frmConsultaCliente_U, mFuncoes_U,
-  frmConsultaFornecedor_U, frmCadastroContaPagar_U, frmConsultaPagar_U;
+  frmConsultaProduto_U, frmConsultaCliente_U, mFuncoes_U, frmConsultaFornecedor_U,
+  frmCadastroContaPagar_U, frmConsultaPagar_U;
 
 {$R *.dfm}
 

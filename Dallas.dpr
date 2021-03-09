@@ -21,7 +21,10 @@ uses
   frmCadastroFornecedor_U in 'View\frmCadastroFornecedor_U.pas' {frmCadastroFornecedor},
   mControllerFornecedor_U in 'Controller\mControllerFornecedor_U.pas',
   mModelEntidadeFornecedor_U in 'Model\Fornecedor\mModelEntidadeFornecedor_U.pas',
-  frmConsultaFornecedor_U in 'View\frmConsultaFornecedor_U.pas' {frmConsultaFornecedor};
+  frmConsultaFornecedor_U in 'View\frmConsultaFornecedor_U.pas' {frmConsultaFornecedor},
+  mModelEntidadePagar_U in 'Model\Pagar\mModelEntidadePagar_U.pas',
+  mControllerPagar_U in 'Controller\mControllerPagar_U.pas',
+  frmConsultaPagar_U in 'View\frmConsultaPagar_U.pas' {frmConsultaPagar};
 
 {$R *.res}
 
@@ -36,5 +39,6 @@ begin
   Application.CreateForm(TfrmCadastroContaPagar, frmCadastroContaPagar);
   Application.CreateForm(TfrmCadastroFornecedor, frmCadastroFornecedor);
   Application.CreateForm(TfrmConsultaFornecedor, frmConsultaFornecedor);
+  Application.CreateForm(TfrmConsultaPagar, frmConsultaPagar);
   Application.Run;
 end.
